@@ -1,1 +1,0 @@
-select avg(total_price) from super.order_data
