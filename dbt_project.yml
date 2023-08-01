@@ -36,5 +36,10 @@ models:
     example:
       +materialized: view
 
-    kpis:
+    super_analytics:
        +materialized: table
+       +schema: analytics
+
+    super_prep:
+        +materialized: table
+        +schema: prep
