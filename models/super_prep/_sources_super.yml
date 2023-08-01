@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: super
+    database: personal  
+    schema: super_raw 
+    tables:
+      - name: order
+      - name: customer
+      - name: order_line
+      - name: product
+      - name: vendor
