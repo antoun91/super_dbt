@@ -41,5 +41,5 @@ models:
        +schema: analytics
 
     super_prep:
-        +materialized: table
+        +materialized: view
         +schema: prep
