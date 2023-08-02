@@ -37,8 +37,8 @@ select
     c.active_customers
 from gmv as g 
 left join basket as b
-on b.year_month = g.year_month
+    on b.year_month = g.year_month
 left join avg_order_value as v
-on v.year_month = g.year_month
+    on v.year_month = g.year_month
 left join active_customers as c
-on c.year_month = g.year_month
+    on c.year_month = g.year_month
