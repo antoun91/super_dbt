@@ -25,7 +25,7 @@ Running the following query:
 
 Will result in a monthly row and columns for each metric that is being tracked. 
 
-<img width="621" alt="image" src="https://github.com/antoun91/super_dbt/assets/59941580/7c3feb1f-c1c0-44cb-a55d-a134334efffe">
+<img width="639" alt="image" src="https://github.com/antoun91/super_dbt/assets/59941580/5646a28d-576b-4251-9462-0eaba06ed6b8">
 
 Modeling the data this way allows an analyst to easily get the metrics/kpis they are looking for, on a monthly basis. It allows them to trend over time how gmv or active customers changes and provide tactical advice to the business on how to improve their numbers.
 
@@ -46,7 +46,7 @@ Running:
 
 Will result in a model that is broken out by customer_id / customer name. It will have total revenue from a customer, lifetime of days if they have made more than once purchase, avg value per day, and first and last months of purchases.
 
-<img width="1006" alt="image" src="https://github.com/antoun91/super_dbt/assets/59941580/3bccf8e2-1c22-4309-8dcc-23242c4b5c83">
+<img width="1016" alt="image" src="https://github.com/antoun91/super_dbt/assets/59941580/fd0f8d71-b547-4840-a91e-85deb7ed07ee">
 
 Modeling the customer lifetime value this way does two things:
 
@@ -66,7 +66,7 @@ This data can be seen by running:
 `select * from super_analytics.customer_retention;`
 
 
-<img width="732" alt="image" src="https://github.com/antoun91/super_dbt/assets/59941580/16efca48-179c-4d09-9d66-b4a44111cadc">
+<img width="717" alt="image" src="https://github.com/antoun91/super_dbt/assets/59941580/320e72ae-1ec8-43e3-8d96-7a7e34e65501">
 
 Continuing to run the business and add more data, we are able to see trends like retention growth. Just from Jan -> Feb we saw and increase from 33% to 75% retention. 
 
@@ -84,7 +84,7 @@ from super_analytics.customer_lifetime_value
 
 We can see that Florida customers spend signifcantly more than all the other states. Insights like this can provide direction on marketing campaign locations and how to target future customers.
 
-<img width="219" alt="image" src="https://github.com/antoun91/super_dbt/assets/59941580/49d05daf-ec92-460d-95b6-3210f33a4fe8">
+<img width="253" alt="image" src="https://github.com/antoun91/super_dbt/assets/59941580/21d9246d-9f77-4a4e-8bdd-30e167fc8ae3">
 
 You could also very easily swap out gender for state
 
@@ -99,7 +99,7 @@ from super_analytics.customer_lifetime_value
 
 But what we find out is that both men and woment shop at _YouGrow_ almost equally 
 
-<img width="194" alt="image" src="https://github.com/antoun91/super_dbt/assets/59941580/b9dc758a-ddbc-4533-b446-171c45008c74">
+<img width="191" alt="image" src="https://github.com/antoun91/super_dbt/assets/59941580/9ad85d88-4472-4ba1-91ab-0a3bcd031c99">
 
 
 When it comes to first purchase attributes, again, the customer_lifetime_value model is built in such a way to answer this question as well.
@@ -115,7 +115,7 @@ from super_analytics.customer_lifetime_value
   order by first_purchase_month, val desc;
 ```
 
-<img width="386" alt="image" src="https://github.com/antoun91/super_dbt/assets/59941580/52b17879-25d6-48d4-80da-7bdb9ad5496b">
+<img width="344" alt="image" src="https://github.com/antoun91/super_dbt/assets/59941580/809ac775-ae8e-4ebf-906f-3dad9af51853">
 
 
 This allows you to easily first_purchase demographics over time. Beth can use this data to anticipate demand year over year as different states will have different seasonal needs for _YouGrow_ products. 
@@ -140,7 +140,7 @@ order by revenue desc;
 
 Returns results as:
 
-<img width="523" alt="image" src="https://github.com/antoun91/super_dbt/assets/59941580/8da89a29-fc1d-40fc-a936-29b092b3473f">
+<img width="497" alt="image" src="https://github.com/antoun91/super_dbt/assets/59941580/3ecfe50a-df65-48d9-9f25-e1f98386ecc6">
 
 
 I've tried to set up all these models in a way that is easy to bring into a visualization tool and not have to do very much data manipulation in the tool itself. 
