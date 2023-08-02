@@ -1,5 +1,5 @@
 select 
-	id::int,
+	id::int as customer_id,
 	name,
 	gender,
 	email,
