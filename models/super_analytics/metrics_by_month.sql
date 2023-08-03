@@ -1,11 +1,9 @@
 with b1 as (
     select 
-        ol.order_id,
-        date_trunc('month', o.created_at) as year_month,
+        order_id,
+        date_trunc('month', ordered_at) as year_month,
         sum(quantity)  as basket_size
-    from {{ref ('order_line')}} as ol
-    inner join {{ref ('order')}} as o
-        on ol.order_id = o.order_id
+    from {{ref ('customer_order_log')}} 
     group by 1,2
 ),
 
@@ -19,9 +17,9 @@ basket as (
 
 gmv as (
     select
-        date_trunc('month', created_at) as year_month,
-        sum(total_price) as gmv
-    from {{ref ('order')}} 
+        date_trunc('month', ordered_at) as year_month,
+        sum(quantity*price) as gmv
+    from {{ref ('customer_order_log')}}  
     group by 1
 ),
 avg_order_value as (
