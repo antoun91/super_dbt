@@ -16,6 +16,16 @@ There are other transformations as well, date strings are cast to timestamps and
 
 Lastly, there is the analytics layer, which is the last 4 modles indicated in the diagram above. `super_analytics` holds the imporant business objects and kpis that Beth is looking for. These are modeled as tables but could also be modeled as views depending on business use cases and freshness requirements. There are pros and cons to both, the main ones being that tables will load faster and be more performant as data grows and dashboards are built on top and views being better when it comes to up to date or live data.
 
+
+### Customer Order Log
+
+This model is a superset of the `order_line` data. It allows a single pane to view all customer transactions, running totals, if an order was refunded, etc. As the business grew, I would make this model an incremental dbt model in order to make it a more performant table. This model allows a variety of kpis and metrics to be run from it, and as more metrics are likely wanted in the future, it creates a good base for analysts and data scientists to build from. I have added columns such as `net_profit`, `running_total`, and `is_refunded` to give Beth and her analysts easy access to various cuts of data she may want. This model is essentially the base model for the rest of the models in the `super_analytics` schema.
+
+`select * from super_analytics.customer_order_log;`
+
+<img width="1690" alt="image" src="https://github.com/antoun91/super_dbt/assets/59941580/87e9584f-9ff5-43e0-85a2-5d76ebf6d991">
+
+
 ### Question 1
 
 Creating models to track:
@@ -39,16 +49,7 @@ The way this is modeled makes it incredibliy easily to create line charts or bar
 Creating models to track:
 Customer Lifetime Value and Customer Retention Rate
 
-I created three new models in the `super_analytics` schema for these two kpis.
-
-### Customer Order Log
-
-This model is a superset of the `order_line` data. It allows a single pane to view all customer transactions, running totals, if an order was refunded, etc. As the business grew, I would make this model an incremental dbt model in order to make it a more performant table. This model allows a variety of kpis and metrics to be run from it, and as more metrics are likely wanted in the future, it creates a good base for analysts and data scientists to build from. I have added columns such as `net_profit`, `running_total`, and `is_refunded` to give Beth and her analysts easy access to various cuts of data she may want. 
-
-`select * from super_analytics.customer_order_log;`
-
-<img width="1690" alt="image" src="https://github.com/antoun91/super_dbt/assets/59941580/87e9584f-9ff5-43e0-85a2-5d76ebf6d991">
-
+I created two new models in the `super_analytics` schema for these two kpis.
 
 
 #### Customer Lifetime Value
