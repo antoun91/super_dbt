@@ -20,14 +20,14 @@ select
 	case when o.refunded_at is null then false else true end as is_refunded,
 	v.vendor_name
 	
-from super_prep.order_line as ol
-left join super_prep.order as o
+from {{ref ('order_line')}} as ol
+left join {{ref ('order')}} as o
 	on o.order_id = ol.order_id
-left join super_prep.customer as c
+left join {{ref ('customer')}} as c
 	on o.customer_id = c.customer_id
-left join super_prep.product as p
+left join {{ref ('product')}} as p
 	on ol.product_id = p.product_id
-left join super_prep.vendor as v
+left join {{ref ('vendor')}} as v
 	on p.vendor_id = v.vendor_id
 	
 order by order_id, ordered_at
