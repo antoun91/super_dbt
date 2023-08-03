@@ -1,5 +1,5 @@
 select
 	id as vendor_id,
-	title,
+	title as vendor_name,
 	created_at::timestamp as created_at
 from {{source ('super', 'vendor')}}
