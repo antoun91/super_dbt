@@ -5,9 +5,9 @@
 I designed my data architecture in layers. 
 I have a raw layer, prep layer, and analytics layer.
 
-The raw layer is to hold the raw data pulled off of the google sheet of sample data. There is a 1:1 relationshp between the tables in `super_raw` and the tabs on the google sheet. I have a table for `customer`, `order`, `order_line`, `product`, and `vendor`. There is no transformation in this layer. It simply holds the data from our source systems.
+The raw layer is to hold the raw data pulled off of the google sheet of sample data. There is a 1:1 relationship between the tables in `super_raw` and the tabs on the google sheet. I have a table for `customer`, `order`, `order_line`, `product`, and `vendor`. There is no transformation in this layer. It simply holds the data from our source systems.
 
-The prep layer has a 1:1 relationship with the raw layer, but with some minor transformations. These are views, instead of tables so that as more data gets added from source systems into the raw layer, there is no need to remodel the data or run additional dbt scripts to keep the prep layer up to date. The transformations that take place in `super_prep` are minor, but important. Things are renamed to be more verbose, such as `id` to `customer_id`. These small changes make it much easier for analysts downstream to understand what is happening in the data and takes significantly less mental overhead to follow.
+The prep layer has a 1:1 relationship with the raw layer, but with some minor transformations. These are views, instead of tables so that as more data gets added from source systems into the raw layer, there is no need to remodel the data or run additional dbt scripts to keep the prep layer up to date. The transformations that take place in `super_prep` are minor, but important. Things are renamed to be more verbose, such as `id` to `customer_id`. And I added a column on the `order` table to be a boolean for `is_refunded`. These small changes make it much easier for analysts downstream to understand what is happening in the data and takes significantly less mental overhead to follow.
 
 There are other transformations as well, date strings are casted to timestamps and price and cost fields are cast to decimals. This simply makes the mathmatical computations in the analytics layer easier and cleaner to write, rather than casting everything when you have to do the math itself. ie `round(sum(ol.total_price),2) as revenue` vs `round(sum(ol.total_price::decimal),2) as revenue`
 
@@ -25,7 +25,7 @@ Running the following query:
 
 Will result in a monthly row and columns for each metric that is being tracked. 
 
-<img width="639" alt="image" src="https://github.com/antoun91/super_dbt/assets/59941580/5646a28d-576b-4251-9462-0eaba06ed6b8">
+<img width="618" alt="image" src="https://github.com/antoun91/super_dbt/assets/59941580/9ba57d08-a3e2-4f9b-bd9e-fbe494deda7b">
 
 Modeling the data this way allows an analyst to easily get the metrics/kpis they are looking for, on a monthly basis. It allows them to trend over time how gmv or active customers changes and provide tactical advice to the business on how to improve their numbers.
 
@@ -36,7 +36,16 @@ The way this is modeled makes it incredibliy easily to create line charts or bar
 Creating models to track:
 Customer Lifetime Value and Customer Retention Rate
 
-I created two new models in the `super_analytics` schema for these two kpis.
+I created three new models in the `super_analytics` schema for these two kpis.
+
+### Customer Order Log
+
+This model is a superset of the `order_line` data. It allows a single pane to view all customer transations, running totals, if an order was refunded, etc. As the business grew, I would make this model and incremental dbt model in order to make it a more performant table. This model allows a variety of kpis and metrics to be run from it, and as more metrics are likely wanted in the future, it creates a good base for analysts and data scientists to build from. I have added columns such as `net_profit`, `running_total`, and `is_refunded` to give Beth and her analysts easy access to various cuts of data she may want. 
+
+`select * from super_analytics.customer_order_log;`
+
+<img width="1690" alt="image" src="https://github.com/antoun91/super_dbt/assets/59941580/87e9584f-9ff5-43e0-85a2-5d76ebf6d991">
+
 
 
 #### Customer Lifetime Value
@@ -44,9 +53,9 @@ Running:
 
 `select * from super_analytics.customer_lifetime_value;`
 
-Will result in a model that is broken out by customer_id / customer name. It will have total revenue from a customer, lifetime of days if they have made more than once purchase, avg value per day, and first and last months of purchases.
+Will result in a model that is broken out by customer_id / customer name. It will have total revenue from a customer, lifetime of days if they have made more than once purchase, avg value per day, and first and last months of purchases. If a customer was refunded for an order, that total is not included in the `total_revenue` column.
 
-<img width="1016" alt="image" src="https://github.com/antoun91/super_dbt/assets/59941580/fd0f8d71-b547-4840-a91e-85deb7ed07ee">
+<img width="1001" alt="image" src="https://github.com/antoun91/super_dbt/assets/59941580/8565840b-6a5b-4005-aebe-315fb71988cc">
 
 Modeling the customer lifetime value this way does two things:
 
