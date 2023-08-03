@@ -162,7 +162,7 @@ For example: the demographics data could easily be a quick bar chart comparing d
 
 In order to drive more repeat customers, Beth has decided to launch a subscription product. How would you integrate this into your data model? What, if anything, from questions 1-2 would you update to account for this new revenue model?
 
-In order to track a subscription model I would add a flag column to the order table that told me if a customer was a subscriber at the time of order. It would be as simple as a boolean column `subscriber` that was a true/false flag that indictated a customer subscription status. 
+In order to track a subscription model I would add a flag column to the order table that told me if a customer was a subscriber at the time of order. It would be as simple as a boolean column `subscriber` that was a true/false flag that indictated a customer subscription status. This would then flow into the `customer_order_log` so an analyst could easily see line by line how a subscriber vs regular customer shopped at _YouGrow_.
 
 I would also add a new model for `customer_subscriptions` where I would keep track of converstion rates of new customers -> new subscribers on a month over month basis. It could also track subscription retention rates as well. 
 This would be similar to the `customer_retention` model. Schema would be something like 
