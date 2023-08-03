@@ -1,12 +1,22 @@
-with basket as (
+with b1 as (
     select 
+        ol.order_id,
         date_trunc('month', o.created_at) as year_month,
-	    avg(quantity) as avg_basket_size
+        sum(quantity)  as basket_size
     from {{ref ('order_line')}} as ol
     inner join {{ref ('order')}} as o
         on ol.order_id = o.order_id
+    group by 1,2
+),
+
+basket as (
+    select
+        year_month,
+        round(avg(basket_size),2) as avg_basket_size
+    from b1
     group by 1
 ),
+
 gmv as (
     select
         date_trunc('month', created_at) as year_month,
