@@ -162,12 +162,12 @@ For example: the demographics data could easily be a quick bar chart comparing d
 
 In order to drive more repeat customers, Beth has decided to launch a subscription product. How would you integrate this into your data model? What, if anything, from questions 1-2 would you update to account for this new revenue model?
 
-In order to track a subscription model I would add a flag column to the order table that told me if a customer was a subscriber at the time of order. It would be as simple as a boolean column `subscriber` that was a true/false flag that indictated a customer subscription status. This would then flow into the `customer_order_log` so an analyst could easily see line by line how a subscriber vs regular customer shopped at _YouGrow_.
+In order to track a subscription model I would add a flag column to the order table that told me if a customer was a subscriber at the time of order. It would be as simple as a boolean column `subscriber` that was a true/false flag that indictated a customer subscription status. This would then flow into the `customer_order_log` so an analyst could easily see line by line how a subscriber vs regular customer shopped at _YouGrow_. I would also add a `payment_last_date` that would be a date of when the customers card was last charged, so we can track if a card is declined/cancelled or when we need to reach out to the customer to update their payment method 
 
 I would also add a new model for `customer_subscriptions` where I would keep track of converstion rates of new customers -> new subscribers on a month over month basis. It could also track subscription retention rates as well. 
 This would be similar to the `customer_retention` model. Schema would be something like 
 ```
-year_month | active_subscribers | retained_subscribers | new_subscribers | subscription_rate | canceled_subscriptions | churn_rate | payment_last_date
+year_month | active_subscribers | retained_subscribers | new_subscribers | subscription_rate | canceled_subscriptions | churn_rate
 ```
 
 `active_subscribers` would be the count of customers who had a subscription in a given month
@@ -181,8 +181,6 @@ year_month | active_subscribers | retained_subscribers | new_subscribers | subsc
 `canceled_subscriptions` would be the count of customers who ended their subscription in a given month
 
 `churn_rate` would be a ratio of new subscribers to canceled subscribers in a given month 
-
-`payment_last_date` would be a date of when the customers card was last charged, so we can track if a card is declined/cancelled or when we need to reach out to the customer to update their payment method 
 
 
 I think adding a `subscriber` flag to the `order` table and adding in a `customer_subscriptions` model would allow _YouGrow_ to answer the questions posed here, as well as several others given the added subscription offering of the business 
