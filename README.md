@@ -128,7 +128,7 @@ from super_analytics.customer_lifetime_value
   order by first_purchase_month, val desc;
 ```
 
-<img width="344" alt="image" src="https://github.com/antoun91/super_dbt/assets/59941580/809ac775-ae8e-4ebf-906f-3dad9af51853">
+<img width="349" alt="image" src="https://github.com/antoun91/super_dbt/assets/59941580/fc17e801-331a-4edd-9af5-4a775b537954">
 
 
 This allows you to easily first_purchase demographics over time. Beth can use this data to anticipate demand year over year as different states will have different seasonal needs for _YouGrow_ products. 
